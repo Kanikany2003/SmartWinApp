@@ -335,16 +335,21 @@
         infoValues[4].textContent = driver.license;
 
         const encodedName = encodeURIComponent(driver.name);
-        const formBaseURL = "https://docs.google.com/forms/d/e/1FAIpQLSfSnQZVJxW3-mVmWT8HY86F4klHOVjjmzvAkS_t9jWoeLoWcw/viewform";
-        const entryID = "entry.688293885";
-        const formURL = `${formBaseURL}?usp=pp_url&${entryID}=${encodedName}`;
 
-        document.getElementById("satisfaction-btn").href = formURL;
-        document.getElementById("complaint-btn").href = formURL;
+        // ฟอร์มประเมินความพึงพอใจ
+        const feedbackBase = "https://docs.google.com/forms/d/e/1FAIpQLSfSnQZVJxW3-mVmWT8HY86F4klHOVjjmzvAkS_t9jWoeLoWcw/viewform";
+        const feedbackEntry = "entry.688293885";
+        const feedbackURL = `${feedbackBase}?usp=pp_url&${feedbackEntry}=${encodedName}`;
+
+        // ฟอร์มร้องเรียน
+        const complaintBase = "https://docs.google.com/forms/d/10984HeNkbnwXWn1JUIrt6d8C3R-qznYOJgkUsxpY-jA/viewform";
+        const complaintEntry = "entry.1508085783";
+        const complaintURL = `${complaintBase}?usp=pp_url&${complaintEntry}=${encodedName}`;
+
+        document.getElementById("satisfaction-btn").href = feedbackURL;
+        document.getElementById("complaint-btn").href = complaintURL;
     });
 </script>
-
-
 
 <body>
     <div class="container">
