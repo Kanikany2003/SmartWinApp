@@ -320,34 +320,41 @@
             return;
         }
 
-        const driver = drivers.find(d => d.id === id);
+        // แก้ตรงนี้: เรียกจาก Google Apps Script แทน
+        fetch(`https://script.google.com/macros/s/AKfycbyVtSZP0Q6U1aNEvMgChbaRK0hN3Od6gUfsiWoTIUvj4tB9o_dVIaAdEVgUDOv8eY4Vmg/exec?id=${id}`)
+            .then(response => response.json())
+            .then(driver => {
+                if (!driver || driver.error) {
+                    alert("ไม่พบข้อมูลผู้ขับขี่");
+                    return;
+                }
 
-        if (!driver) {
-            alert("ไม่พบข้อมูลผู้ขับขี่");
-            return;
-        }
+                const infoValues = document.querySelectorAll(".info-value");
+                infoValues[0].textContent = driver.id;
+                infoValues[1].textContent = driver.location;
+                infoValues[2].textContent = driver.shirt;
+                infoValues[3].textContent = driver.name;
+                infoValues[4].textContent = driver.license;
 
-        const infoValues = document.querySelectorAll(".info-value");
-        infoValues[0].textContent = driver.id;
-        infoValues[1].textContent = driver.location;
-        infoValues[2].textContent = driver.shirt;
-        infoValues[3].textContent = driver.name;
-        infoValues[4].textContent = driver.license;
+                const encodedName = encodeURIComponent(driver.name);
 
-        const encodedName = encodeURIComponent(driver.name);
+                // ฟอร์มประเมินความพึงพอใจ
+                const feedbackBase = "https://docs.google.com/forms/d/e/1FAIpQLSfSnQZVJxW3-mVmWT8HY86F4klHOVjjmzvAkS_t9jWoeLoWcw/viewform";
+                const feedbackEntry = "entry.688293885";
+                const feedbackURL = `${feedbackBase}?usp=pp_url&${feedbackEntry}=${encodedName}`;
 
-        // ฟอร์มประเมินความพึงพอใจ
-        const feedbackBase = "https://docs.google.com/forms/d/e/1FAIpQLSfSnQZVJxW3-mVmWT8HY86F4klHOVjjmzvAkS_t9jWoeLoWcw/viewform";
-        const feedbackEntry = "entry.688293885";
-        const feedbackURL = `${feedbackBase}?usp=pp_url&${feedbackEntry}=${encodedName}`;
+                // ฟอร์มร้องเรียน
+                const complaintBase = "https://docs.google.com/forms/d/10984HeNkbnwXWn1JUIrt6d8C3R-qznYOJgkUsxpY-jA/viewform";
+                const complaintEntry = "entry.1508085783";
+                const complaintURL = `${complaintBase}?usp=pp_url&${complaintEntry}=${encodedName}`;
 
-        // ฟอร์มร้องเรียน
-        const complaintBase = "https://docs.google.com/forms/d/10984HeNkbnwXWn1JUIrt6d8C3R-qznYOJgkUsxpY-jA/viewform";
-        const complaintEntry = "entry.1508085783";
-        const complaintURL = `${complaintBase}?usp=pp_url&${complaintEntry}=${encodedName}`;
-
-        document.getElementById("satisfaction-btn").href = feedbackURL;
-        document.getElementById("complaint-btn").href = complaintURL;
+                document.getElementById("satisfaction-btn").href = feedbackURL;
+                document.getElementById("complaint-btn").href = complaintURL;
+            })
+            .catch(error => {
+                console.error("เกิดข้อผิดพลาดในการโหลดข้อมูลผู้ขับขี่:", error);
+                alert("ไม่สามารถโหลดข้อมูลผู้ขับขี่ได้");
+            });
     });
 </script>
 
