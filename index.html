@@ -307,11 +307,16 @@
                 font-size: 1.2rem;
             }
 
+            .rating-wrapper {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 4px;
+            }
+
             .rating-stars {
                 display: flex;
                 gap: 4px;
-                margin-bottom: 4px;
-                justify-content: flex-end;
             }
 
             .star {
@@ -333,9 +338,7 @@
 
             .rating-number {
                 font-size: 0.9rem;
-                text-align: right;
                 color: #555;
-                margin-top: 2px;
             }
 
         }
@@ -515,13 +518,11 @@
                     คะแนนความพึงพอใจ
                 </div>
             </div>
-            <div class="info-value">
-                <div class="rating-stars" id="rating-stars"></div>
-                <div class="rating-number" id="rating-text"></div>
+            <div class="info-value rating-wrapper">
+                <div id="rating-stars" class="rating-stars"></div>
+                <div id="rating-text" class="rating-number"></div>
             </div>
         </div>
-
-
 
         <div class="feedback-section">
             <div class="section-title">💬 ความคิดเห็นและข้อเสนอแนะ</div>
@@ -544,7 +545,6 @@
 
             </div>
         </div>
-
 
         <div class="emergency-section">
             <div class="section-title">📞 ติดต่อฉุกเฉิน</div>
