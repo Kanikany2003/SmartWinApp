@@ -306,11 +306,73 @@
                 text-align: left;
                 font-size: 1.2rem;
             }
+
+            .rating-stars {
+                display: flex;
+                gap: 4px;
+                margin-bottom: 4px;
+            }
+
+            .star {
+                width: 24px;
+                height: 24px;
+                clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%,
+                        79% 91%, 50% 70%, 21% 91%, 32% 57%,
+                        2% 35%, 39% 35%);
+                background-color: gray;
+            }
+
+            .star.full {
+                background-color: gold;
+            }
+
+            .star.half {
+                background: linear-gradient(to right, gold 50%, gray 50%);
+            }
+
+            .rating-number {
+                font-size: 14px;
+                color: #333;
+            }
+
         }
     </style>
 </head>
 
 <script>
+    function renderStars(score, total) {
+        const fullStars = Math.floor(score);
+        const halfStar = (score % 1 >= 0.25 && score % 1 < 0.75) ? 1 : 0;
+        const emptyStars = 5 - fullStars - halfStar;
+
+        const starContainer = document.getElementById("rating-stars");
+        const ratingText = document.getElementById("rating-text");
+
+        if (!starContainer || !ratingText) return;
+
+        starContainer.innerHTML = "";
+
+        for (let i = 0; i < fullStars; i++) {
+            const star = document.createElement("div");
+            star.classList.add("star", "full");
+            starContainer.appendChild(star);
+        }
+
+        if (halfStar) {
+            const star = document.createElement("div");
+            star.classList.add("star", "half");
+            starContainer.appendChild(star);
+        }
+
+        for (let i = 0; i < emptyStars; i++) {
+            const star = document.createElement("div");
+            star.classList.add("star");
+            starContainer.appendChild(star);
+        }
+
+        ratingText.innerText = `(${score.toFixed(1)}/5.0, ${total} รีวิว)`;
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
         const urlParams = new URLSearchParams(window.location.search);
         const id = urlParams.get("id");
@@ -320,7 +382,6 @@
             return;
         }
 
-        // เรียก Google Apps Script URL
         fetch(`https://script.google.com/macros/s/AKfycbyVtSZP0Q6U1aNEvMgChbaRK0hN3Od6gUfsiWoTIUvj4tB9o_dVIaAdEVgUDOv8eY4Vmg/exec?id=${id}`)
             .then(res => res.json())
             .then(driver => {
@@ -348,6 +409,17 @@
 
                 document.getElementById("satisfaction-btn").href = feedbackURL;
                 document.getElementById("complaint-btn").href = complaintURL;
+
+                fetch(`https://script.google.com/macros/s/YOUR_RATING_SCRIPT_ID/exec?id=${id}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        const avg = parseFloat(data.avgRating);
+                        const total = parseInt(data.totalReviews);
+                        renderStars(avg, total);
+                    })
+                    .catch(err => {
+                        console.error("Error fetching rating:", err);
+                    });
             })
             .catch(error => {
                 console.error("เกิดข้อผิดพลาดในการโหลดข้อมูล", error);
@@ -355,7 +427,6 @@
             });
     });
 </script>
-
 
 <body>
     <div class="container">
@@ -431,6 +502,26 @@
             </div>
         </div>
 
+        <div class="rating-stars" id="rating-stars"></div>
+        <div class="rating-number" id="rating-text"></div>
+        <div class="info-row">
+            <div class="info-label">
+                <div class="info-label-with-icon">
+                    <svg class="info-icon" viewBox="0 0 24 24">
+                        <path
+                            d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.45 13.97L5.82 21L12 17.27Z" />
+                    </svg>
+                    คะแนนความพึงพอใจ
+                </div>
+            </div>
+            <div class="info-value">
+                <div class="rating-stars" id="rating-stars"></div>
+                <div class="rating-number" id="rating-text"></div>
+            </div>
+        </div>
+
+
+
         <div class="feedback-section">
             <div class="section-title">💬 ความคิดเห็นและข้อเสนอแนะ</div>
             <div class="feedback-buttons">
@@ -475,5 +566,4 @@
         </div>
     </div>
 </body>
-
 </html>
