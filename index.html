@@ -376,7 +376,7 @@
             starContainer.appendChild(star);
         }
 
-        ratingText.innerText = `(${score.toFixed(1)}/5.0, ${total} รีวิว)`;
+        ratingText.innerText = `(${score.toFixed(1)}/5.0, จาก ${total} คำถาม)`;
     }
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -388,7 +388,10 @@
             return;
         }
 
-        fetch(`https://script.google.com/macros/s/AKfycbyVtSZP0Q6U1aNEvMgChbaRK0hN3Od6gUfsiWoTIUvj4tB9o_dVIaAdEVgUDOv8eY4Vmg/exec?id=${id}`)
+        // เปลี่ยนเป็น URL ที่ใช้งานได้จริงของ Web App Script ของน้อง
+        const apiUrl = `https://script.google.com/macros/s/AKfycbyVtSZP0Q6U1aNEvMgChbaRK0hN3Od6gUfsiWoTIUvj4tB9o_dVIaAdEVgUDOv8eY4Vmg/exec?id=${id}`;
+
+        fetch(apiUrl)
             .then(res => res.json())
             .then(driver => {
                 if (!driver || driver.error) {
@@ -396,14 +399,13 @@
                     return;
                 }
 
-                const infoValues = document.querySelectorAll(".info-value");
-                infoValues[0].textContent = driver.id;
-                infoValues[1].textContent = driver.location;
-                infoValues[2].textContent = driver.shirt;
-                infoValues[3].textContent = driver.name;
-                infoValues[4].textContent = driver.license;
+                document.getElementById("driver-id").textContent = driver.id || "-";
+                document.getElementById("stand").textContent = driver.location || "-";
+                document.getElementById("vest-number").textContent = driver.shirt || "-";
+                document.getElementById("driver-name").textContent = driver.name || "-";
+                document.getElementById("plate-number").textContent = driver.license || "-";
 
-                const encodedName = encodeURIComponent(driver.name);
+                const encodedName = encodeURIComponent(driver.name || "");
 
                 const feedbackBase = "https://docs.google.com/forms/d/e/1FAIpQLSfSnQZVJxW3-mVmWT8HY86F4klHOVjjmzvAkS_t9jWoeLoWcw/viewform";
                 const feedbackEntry = "entry.688293885";
@@ -416,19 +418,17 @@
                 document.getElementById("satisfaction-btn").href = feedbackURL;
                 document.getElementById("complaint-btn").href = complaintURL;
 
-                fetch(`https://script.google.com/macros/s/YOUR_RATING_SCRIPT_ID/exec?id=${id}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        const avg = parseFloat(data.avgRating);
-                        const total = parseInt(data.totalReviews);
-                        renderStars(avg, total);
-                    })
-                    .catch(err => {
-                        console.error("Error fetching rating:", err);
-                    });
+                // ⭐ แสดงคะแนนเฉลี่ย
+                if (driver.avgRating && driver.totalQuestions) {
+                    const avg = parseFloat(driver.avgRating);
+                    const total = parseInt(driver.totalQuestions);
+                    renderStars(avg, total);
+                } else {
+                    document.getElementById("rating-text").innerText = "(ยังไม่มีคะแนน)";
+                }
             })
-            .catch(error => {
-                console.error("เกิดข้อผิดพลาดในการโหลดข้อมูล", error);
+            .catch(err => {
+                console.error("เกิดข้อผิดพลาดในการโหลดข้อมูล", err);
                 alert("เกิดข้อผิดพลาดในการโหลดข้อมูลผู้ขับขี่");
             });
     });
