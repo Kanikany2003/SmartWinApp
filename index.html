@@ -388,8 +388,7 @@
             return;
         }
 
-        // เปลี่ยนเป็น URL ที่ใช้งานได้จริงของ Web App Script ของน้อง
-        const apiUrl = `https://script.google.com/macros/s/AKfycbyVtSZP0Q6U1aNEvMgChbaRK0hN3Od6gUfsiWoTIUvj4tB9o_dVIaAdEVgUDOv8eY4Vmg/exec?id=${id}`;
+        const apiUrl = `https://us-central1-smartwinapp.cloudfunctions.net/driverInfo?id=${id}`;
 
         fetch(apiUrl)
             .then(res => res.json())
@@ -418,7 +417,6 @@
                 document.getElementById("satisfaction-btn").href = feedbackURL;
                 document.getElementById("complaint-btn").href = complaintURL;
 
-                // ⭐ แสดงคะแนนเฉลี่ย
                 if (driver.avgRating && driver.totalQuestions) {
                     const avg = parseFloat(driver.avgRating);
                     const total = parseInt(driver.totalQuestions);
