@@ -2,21 +2,11 @@
 <html lang="th">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ข้อมูลผู้ขับขี่มอเตอร์ไซด์รับจ้าง - เขตคลองสามวา</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
-    <script src="first.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>รายชื่อผู้ขับขี่มอเตอร์ไซต์</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-family: 'Sarabun', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -25,6 +15,7 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
+            margin: 0;
         }
 
         .container {
@@ -52,120 +43,149 @@
         .header {
             background: linear-gradient(135deg, #2196F3, #21CBF3);
             color: white;
-            padding: 30px 25px;
+            padding: 15px;
             text-align: center;
         }
 
         .header h1 {
-            font-size: 1.8rem;
+            font-size: 1.4rem;
             font-weight: 600;
-            margin-bottom: 8px;
+            margin: 0 0 8px 0;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         .header p {
             font-size: 1rem;
-            opacity: 0.9;
+            opacity: 0.95;
             font-weight: 400;
+            margin: 0;
+            line-height: 1.3;
         }
 
         .info-table {
-            padding: 30px;
+            padding: 15px;
         }
 
         .info-row {
-            display: flex;
-            padding: 18px 0;
-            border-bottom: 1px solid #e9ecef;
+            background: #f8f9fa;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            padding: 15px;
+            border-left: 4px solid #2196F3;
             transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .info-row:last-child {
-            border-bottom: none;
         }
 
         .info-row:hover {
-            background: linear-gradient(90deg, #f8f9fa, transparent);
-            transform: translateX(5px);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
-        .info-row::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 4px;
-            background: linear-gradient(45deg, #2196F3, #21CBF3);
-            opacity: 0;
-            transition: opacity 0.3s ease;
+        .name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
         }
 
-        .info-row:hover::before {
-            opacity: 1;
+        .rider-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
         }
 
-        .info-label {
-            flex: 1;
-            font-size: 1rem;
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .detail-label {
             color: #666;
             font-weight: 500;
-            padding-right: 20px;
+            font-size: 0.85rem;
         }
 
-        .info-value {
-            flex: 1.5;
-            font-size: 1.1rem;
+        .detail-value {
             color: #333;
             font-weight: 600;
-            text-align: right;
+            font-size: 0.95rem;
+        }
+
+        .plate-number {
+            grid-column: span 2;
+            text-align: left;
+            background: #e3f2fd;
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-top: 5px;
+        }
+
+        .plate-number .detail-value {
+            color: #1976d2;
+            font-size: 1rem;
+            font-weight: 700;
         }
 
         .feedback-section {
             background: #f8f9fa;
-            padding: 25px;
-            border-top: 1px solid #e9ecef;
-        }
-
-        .emergency-section {
-            background: #f1f3f4;
-            padding: 25px;
+            padding: 20px 15px;
             border-top: 1px solid #e9ecef;
         }
 
         .section-title {
             text-align: center;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: #333;
             font-weight: 600;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+        }
+
+        #rider-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        #rider-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #rider-list::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 3px;
+        }
+
+        #rider-list::-webkit-scrollbar-track {
+            background: transparent;
         }
 
         .feedback-buttons {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 10px;
+            gap: 12px;
         }
 
         .feedback-btn {
-            padding: 15px 20px;
-            border: none;
+            padding: 12px;
             border-radius: 12px;
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            font-family: 'Sarabun', sans-serif;
-            text-decoration: none;
-            color: white;
             position: relative;
             overflow: hidden;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .feedback-btn .icon {
+            width: 18px;
+            height: 18px;
+            margin-right: 6px;
+            fill: white;
         }
 
         .feedback-btn::before {
@@ -189,7 +209,7 @@
 
         .satisfaction-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
         }
 
         .complaint-btn {
@@ -198,336 +218,51 @@
 
         .complaint-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(255, 193, 7, 0.4);
-        }
-
-        .emergency-buttons {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .emergency-btn {
-            padding: 15px 20px;
-            border: none;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-family: 'Sarabun', sans-serif;
-            text-decoration: none;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .emergency-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .emergency-btn:hover::before {
-            left: 100%;
-        }
-
-        .rescue-btn {
-            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
-        }
-
-        .rescue-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
-        }
-
-        .police-btn {
-            background: linear-gradient(45deg, #4834d4, #686de0);
-        }
-
-        .police-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(72, 52, 212, 0.4);
-        }
-
-        .icon {
-            width: 20px;
-            height: 20px;
-            fill: currentColor;
-        }
-
-        .info-icon {
-            width: 24px;
-            height: 24px;
-            fill: #2196F3;
-            margin-right: 10px;
-            flex-shrink: 0;
-        }
-
-        .info-label-with-icon {
-            display: flex;
-            align-items: center;
-        }
-
-        .rating-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 4px;
-        }
-
-        .rating-stars {
-            display: flex;
-            gap: 4px;
-        }
-
-        .star {
-            width: 20px;
-            height: 20px;
-            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%,
-                    79% 91%, 50% 70%, 21% 91%, 32% 57%,
-                    2% 35%, 39% 35%);
-            background-color: #ddd;
-        }
-
-        .star.full {
-            background-color: gold;
-        }
-
-        .star.half {
-            background: linear-gradient(to right, gold 50%, #ddd 50%);
-        }
-
-        .rating-number {
-            font-size: 0.9rem;
-            color: #555;
+            box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
         }
 
         @media (max-width: 600px) {
-            .container {
-                width: 95%;
-            }
-
-            .emergency-buttons,
-            .feedback-buttons {
-                grid-template-columns: 1fr;
-            }
-
             .header h1 {
-                font-size: 1.5rem;
-            }
-
-            .info-row {
-                flex-direction: column;
-                text-align: left;
-            }
-
-            .info-label {
-                padding-right: 0;
-                margin-bottom: 5px;
-            }
-
-            .info-value {
-                text-align: left;
                 font-size: 1.2rem;
             }
 
+            .header p {
+                font-size: 0.9rem;
+            }
+
+            .feedback-btn {
+                font-size: 0.85rem;
+                padding: 10px 8px;
+            }
+
+            .rider-details {
+                grid-template-columns: 1fr;
+                gap: 6px;
+            }
+
+            .plate-number {
+                grid-column: span 1;
+            }
         }
     </style>
 </head>
 
-<script>
-    function renderStars(score, total) {
-        const fullStars = Math.floor(score);
-        const halfStar = (score % 1 >= 0.25 && score % 1 < 0.75) ? 1 : 0;
-        const emptyStars = 5 - fullStars - halfStar;
-
-        const starContainer = document.getElementById("rating-stars");
-        const ratingText = document.getElementById("rating-text");
-
-        if (!starContainer || !ratingText) return;
-
-        starContainer.innerHTML = "";
-
-        for (let i = 0; i < fullStars; i++) {
-            const star = document.createElement("div");
-            star.classList.add("star", "full");
-            starContainer.appendChild(star);
-        }
-
-        if (halfStar) {
-            const star = document.createElement("div");
-            star.classList.add("star", "half");
-            starContainer.appendChild(star);
-        }
-
-        for (let i = 0; i < emptyStars; i++) {
-            const star = document.createElement("div");
-            star.classList.add("star");
-            starContainer.appendChild(star);
-        }
-
-        ratingText.innerText = `(${score.toFixed(1)}/5.0, จาก ${total} คำถาม)`;
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const id = urlParams.get("id");
-
-        if (!id) {
-            alert("ไม่พบรหัสผู้ขับขี่");
-            return;
-        }
-
-        const apiUrl = `https://script.google.com/macros/s/AKfycbyVtSZP0Q6U1aNEvMgChbaRK0hN3Od6gUfsiWoTIUvj4tB9o_dVIaAdEVgUDOv8eY4Vmg/exec?id=${id}`;
-
-        fetch(apiUrl)
-            .then(res => res.json())
-            .then(driver => {
-                if (!driver || driver.error) {
-                    alert("ไม่พบข้อมูลผู้ขับขี่");
-                    return;
-                }
-
-                document.getElementById("driver-id").textContent = driver.id || "-";
-                document.getElementById("stand").textContent = driver.location || "-";
-                document.getElementById("vest-number").textContent = driver.shirt || "-";
-                document.getElementById("driver-name").textContent = driver.name || "-";
-                document.getElementById("plate-number").textContent = driver.license || "-";
-
-                const encodedName = encodeURIComponent(driver.name || "");
-
-                const feedbackBase = "https://docs.google.com/forms/d/e/1FAIpQLSfSnQZVJxW3-mVmWT8HY86F4klHOVjjmzvAkS_t9jWoeLoWcw/viewform";
-                const feedbackEntry = "entry.688293885";
-                const feedbackURL = `${feedbackBase}?usp=pp_url&${feedbackEntry}=${encodedName}`;
-
-                const complaintBase = "https://docs.google.com/forms/d/10984HeNkbnwXWn1JUIrt6d8C3R-qznYOJgkUsxpY-jA/viewform";
-                const complaintEntry = "entry.1508085783";
-                const complaintURL = `${complaintBase}?usp=pp_url&${complaintEntry}=${encodedName}`;
-
-                document.getElementById("satisfaction-btn").href = feedbackURL;
-                document.getElementById("complaint-btn").href = complaintURL;
-
-                if (driver.avgRating && driver.totalQuestions) {
-                    const avg = parseFloat(driver.avgRating);
-                    const total = parseInt(driver.totalQuestions);
-                    renderStars(avg, total);
-                } else {
-                    document.getElementById("rating-text").innerText = "(ยังไม่มีคะแนน)";
-                }
-            })
-            .catch(err => {
-                console.error("เกิดข้อผิดพลาดในการโหลดข้อมูล", err);
-                alert("เกิดข้อผิดพลาดในการโหลดข้อมูลผู้ขับขี่");
-            });
-    });
-</script>
-
 <body>
-    <!-- 🧾 Main Container -->
     <div class="container">
         <div class="header">
-            <h1>ข้อมูลผู้ขับขี่มอเตอร์ไซด์รับจ้าง</h1>
-            <p>สำนักงานเขตคลองสามวา กรุงเทพมหานคร</p>
+            <h1 id="app-title">Smart WIN</h1>
+            <p id="area-detail">กำลังโหลด...</p>
         </div>
 
-        <!-- 🚦 Driver Info Section -->
         <div class="info-table">
-            <!-- Your existing rows... -->
-            <div class="info-row">
-                <div class="info-label">
-                    <div class="info-label-with-icon">
-                        <svg class="info-icon" viewBox="0 0 24 24">
-                            <path
-                                d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2M12 20C7.6 20 4 16.4 4 12S7.6 4 12 4 20 7.6 20 12 16.4 20 12 20M12 6C9.8 6 8 7.8 8 10S9.8 14 12 14 16 12.2 16 10 14.2 6 12 6Z" />
-                        </svg>
-                        เลขประจำตัว
-                    </div>
-                </div>
-                <div class="info-value" id="driver-id"></div>
-            </div>
-
-            <div class="info-row">
-                <div class="info-label">
-                    <div class="info-label-with-icon">
-                        <svg class="info-icon" viewBox="0 0 24 24">
-                            <path
-                                d="M12 2C15.31 2 18 4.69 18 8C18 12.5 12 19 12 19S6 12.5 6 8C6 4.69 8.69 2 12 2M12 6C10.9 6 10 6.9 10 8S10.9 10 12 10 14 9.1 14 8 13.1 6 12 6Z" />
-                        </svg>
-                        จุดจอด
-                    </div>
-                </div>
-                <div class="info-value" id="stand"></div>
-            </div>
-
-            <div class="info-row">
-                <div class="info-label">
-                    <div class="info-label-with-icon">
-                        <svg class="info-icon" viewBox="0 0 24 24">
-                            <path
-                                d="M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2M6.5 12.5L7.5 16.5L11.5 17.5L7.5 18.5L6.5 22.5L5.5 18.5L1.5 17.5L5.5 16.5L6.5 12.5Z" />
-                        </svg>
-                        หมายเลขเสื้อ
-                    </div>
-                </div>
-                <div class="info-value" id="vest-number"></div>
-            </div>
-
-            <div class="info-row">
-                <div class="info-label">
-                    <div class="info-label-with-icon">
-                        <svg class="info-icon" viewBox="0 0 24 24">
-                            <path
-                                d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2M21 9V7L15 1H9L3 7V9H21M12 8C8.7 8 6 10.7 6 14S8.7 20 12 20 18 17.3 18 14 15.3 8 12 8Z" />
-                        </svg>
-                        ชื่อผู้ขับขี่
-                    </div>
-                </div>
-                <div class="info-value" id="driver-name"></div>
-            </div>
-
-            <div class="info-row">
-                <div class="info-label">
-                    <div class="info-label-with-icon">
-                        <svg class="info-icon" viewBox="0 0 24 24">
-                            <path
-                                d="M5 11L6.5 6.5H17.5L19 11M17.5 16C16.7 16 16 15.3 16 14.5S16.7 13 17.5 13 19 13.7 19 14.5 18.3 16 17.5 16M6.5 16C5.7 16 5 15.3 5 14.5S5.7 13 6.5 13 8 13.7 8 14.5 7.3 16 6.5 16M17.5 8C18.3 8 19 8.7 19 9.5V11H5V9.5C5 8.7 5.7 8 6.5 8H17.5Z" />
-                        </svg>
-                        ทะเบียนรถ
-                    </div>
-                </div>
-                <div class="info-value" id="plate-number"></div>
-            </div>
-
-            <div class="info-row">
-                <div class="info-label">
-                    <div class="info-label-with-icon">
-                        <svg class="info-icon" viewBox="0 0 24 24">
-                            <path
-                                d="M12 17.3L18.2 21L16.5 14L22 9.2L14.8 8.6L12 2L9.2 8.6L2 9.2L7.5 14L5.8 21L12 17.3Z" />
-                        </svg>
-                        คะแนนความพึงพอใจ
-                    </div>
-                </div>
-                <div class="info-value rating-wrapper">
-                    <div id="rating-stars" class="rating-stars"></div>
-                    <div id="rating-text" class="rating-number"></div>
-                </div>
+            <div id="rider-list">
+                <!-- ตรงนี้ JavaScript จะสร้าง div ของผู้ขับขี่แต่ละคนเข้ามา -->
             </div>
         </div>
 
-        <!-- 💬 Feedback Section INSIDE -->
         <div class="feedback-section">
-            <div class="section-title">💬 ความคิดเห็นและข้อเสนอแนะ</div>
+            <div class="section-title">ให้คะแนนการบริการ</div>
+
             <div class="feedback-buttons">
                 <a id="satisfaction-btn" target="_blank" class="feedback-btn satisfaction-btn">
                     <svg class="icon" viewBox="0 0 24 24">
@@ -536,7 +271,6 @@
                     </svg>
                     ประเมินความพึงพอใจ
                 </a>
-
                 <a id="complaint-btn" target="_blank" class="feedback-btn complaint-btn">
                     <svg class="icon" viewBox="0 0 24 24">
                         <path d="M13 14H11V9H13M13 18H11V16H13M1 21H23L12 2L1 21Z" />
@@ -545,28 +279,55 @@
                 </a>
             </div>
         </div>
-
-        <!-- 🚨 Emergency Section INSIDE -->
-        <div class="emergency-section">
-            <div class="section-title">📞 ติดต่อฉุกเฉิน</div>
-            <div class="emergency-buttons">
-                <a href="tel:1669" class="emergency-btn rescue-btn">
-                    <svg class="icon" viewBox="0 0 24 24">
-                        <path
-                            d="M19.5 4.5L17 2L15.5 3.5L18 6L16.5 7.5L18 9L19.5 7.5L21 9L22.5 7.5L21 6L22.5 4.5L21 3L19.5 4.5M8 12C9.1 12 10 11.1 10 10S9.1 8 8 8 6 8.9 6 10 6.9 12 8 12M8 4C10.2 4 12 5.8 12 8S10.2 12 8 12 4 10.2 4 8 5.8 4 8 4M8 13C5.3 13 0 14.3 0 17V20H16V17C16 14.3 10.7 13 8 13Z" />
-                    </svg>
-                    หน่วยกู้ภัย 1669
-                </a>
-                <a href="tel:191" class="emergency-btn police-btn">
-                    <svg class="icon" viewBox="0 0 24 24">
-                        <path
-                            d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2M21 9V7L15 1H9L3 7V9H21M12 8C8.7 8 6 10.7 6 14S8.7 20 12 20 18 17.3 18 14 15.3 8 12 8M12 18C9.8 18 8 16.2 8 14S9.8 10 12 10 16 11.8 16 14 14.2 18 12 18M12 12C11.4 12 11 12.4 11 13V15C11 15.6 11.4 16 12 16S13 15.6 13 15V13C13 12.4 12.6 12 12 12Z" />
-                    </svg>
-                    ตำรวจ 191
-                </a>
-            </div>
-        </div>
     </div>
+
+    <script>
+        const areaParam = new URLSearchParams(window.location.search).get('area') || 'เขตตัวอย่าง';
+        document.getElementById('app-title').innerHTML = `Smart WIN`;
+        document.querySelector('.header p').innerHTML = `ที่ตั้งวินพื้นที่เขตคลองสามวา<br>วิน ${areaParam}`;
+
+        fetch('https://script.google.com/macros/s/AKfycbwQhF65Unc2P_2ZG2JqK_766YEBh2A0ofxjHBTw16pN08SxUNNqQECYyI5O61x698YTzg/exec?area='
+            + encodeURIComponent(areaParam))
+            .then(res => res.json())
+            .then(riders => {
+                const list = document.getElementById('rider-list');
+                list.innerHTML = '';
+                riders.forEach(r => {
+                    const row = document.createElement('div');
+                    row.className = 'info-row';
+                    row.innerHTML = `
+                        <div class="name">${r.name}</div>
+                        <div class="rider-details">
+                            <div class="detail-item">
+                                <span class="detail-label">เลขประจำตัว</span>
+                                <span class="detail-value">${r.id}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">หมายเลขเสื้อ</span>
+                                <span class="detail-value">${r.shirt_number}</span>
+                            </div>
+                            <div class="detail-item plate-number">
+                                <span class="detail-label">ทะเบียนรถ</span>
+                                <span class="detail-value">${r.plate}</span>
+                            </div>
+                        </div>
+                    `;
+                    list.appendChild(row);
+                });
+            })
+            .catch(err => console.error('Fetch error:', err));
+
+        // 3. เซ็ตลิงก์ให้ปุ่มไปยัง Google Form พร้อมระบุเขต
+        const SAT_FORM_ID = 'https://docs.google.com/forms/d/e/1FAIpQLScu_SXWPO9AzMpR47L055eoHCbjOhqg_IQrxp0YV9xvAlP-wA/viewform';      // ใส่ Form ID ของฟอร์ม "ประเมิน"
+        const COMP_FORM_ID = 'https://docs.google.com/forms/d/e/1FAIpQLSdCkKg2eqjx5lySE-5gwLh2D63shdCY0hA-Mgl_iIuefovyDA/viewform';
+        const ENTRY_FIELD = 'entry.2005620554';         // ใส่ entry.<รหัสช่อง> ที่รับค่าเขต
+
+        document.getElementById('satisfaction-btn').href =
+            `https://docs.google.com/forms/d/${SAT_FORM_ID}/viewform?${ENTRY_FIELD}=${encodeURIComponent(areaParam)}`;
+
+        document.getElementById('complaint-btn').href =
+            `https://docs.google.com/forms/d/${COMP_FORM_ID}/viewform?${ENTRY_FIELD}=${encodeURIComponent(areaParam)}`;
+    </script>
 </body>
 
 </html>
