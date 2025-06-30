@@ -322,11 +322,12 @@
         const COMP_FORM_ID = '1FAIpQLSdCkKg2eqjx5lySE-5gwLh2D63shdCY0hA-Mgl_iIuefovyDA';
         const ENTRY_FIELD = 'entry.2005620554';
 
-        document.getElementById('satisfaction-btn').href =
-            `https://docs.google.com/forms/d/e/${SAT_FORM_ID}/viewform?${ENTRY_FIELD}=${encodeURIComponent(areaParam)}`;
+        const baseSat = `https://docs.google.com/forms/d/e/${SAT_FORM_ID}/viewform`;
+        document.getElementById('satisfaction-btn').href = `${baseSat}?usp=pp_url&${ENTRY_FIELD}=${encodeURIComponent(areaParam)}`;
+        
+        const baseComp = `https://docs.google.com/forms/d/e/${COMP_FORM_ID}/viewform`;
+        document.getElementById('complaint-btn').href = `${baseComp}?usp=pp_url&${ENTRY_FIELD}=${encodeURIComponent(areaParam)}`;
 
-        document.getElementById('complaint-btn').href =
-            `https://docs.google.com/forms/d/e/${COMP_FORM_ID}/viewform?${ENTRY_FIELD}=${encodeURIComponent(areaParam)}`;
 
     </script>
 </body>
