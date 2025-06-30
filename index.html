@@ -322,8 +322,6 @@
         const COMP_FORM_ID = '1FAIpQLSdCkKg2eqjx5lySE-5gwLh2D63shdCY0hA-Mgl_iIuefovyDA';
         const ENTRY_FIELD = 'entry.2005620554';
 
-        const areaParam = new URLSearchParams(window.location.search).get('area') || 'เขตตัวอย่าง';
-
         document.getElementById('satisfaction-btn').href =
             `https://docs.google.com/forms/d/e/${SAT_FORM_ID}/viewform?${ENTRY_FIELD}=${encodeURIComponent(areaParam)}`;
 
