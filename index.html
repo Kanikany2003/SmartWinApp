@@ -318,18 +318,16 @@
             .catch(err => console.error('Fetch error:', err));
 
         // 3. เซ็ตลิงก์ให้ปุ่มไปยัง Google Form พร้อมระบุเขต
-        const areaParam = new URLSearchParams(window.location.search).get('area') || 'เขตตัวอย่าง';
         const ENTRY_FIELD = 'entry.2005620554'; // ปรับให้ตรงกับ entry ของฟอร์มจริง
-        
+
         const SAT_FORM_ID = '1FAIpQLScu_SXWPO9AzMpR47L055eoHCbjOhqg_IQrxp0YV9xvAlP-wA';
         const COMP_FORM_ID = '1FAIpQLSdCkKg2eqjx5lySE-5gwLh2D63shdCY0hA-Mgl_iIuefovyDA';
-        
+
         const baseSat = `https://docs.google.com/forms/d/e/${SAT_FORM_ID}/viewform?usp=pp_url&${ENTRY_FIELD}=${encodeURIComponent(areaParam)}`;
         document.getElementById('satisfaction-btn').href = baseSat;
-        
+
         const baseComp = `https://docs.google.com/forms/d/e/${COMP_FORM_ID}/viewform?usp=pp_url&${ENTRY_FIELD}=${encodeURIComponent(areaParam)}`;
         document.getElementById('complaint-btn').href = baseComp;
-
     </script>
 </body>
 
