@@ -136,7 +136,7 @@
 
         .dashboard-section {
             background: linear-gradient(135deg, #28a745, #20c997);
-            padding: 25px;
+            padding: 15px 5px;
             border-top: 1px solid #e9ecef;
             text-align: center;
             color: white;
@@ -152,77 +152,64 @@
 
         .dashboard-content {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
             gap: 20px;
-            flex-wrap: wrap;
         }
 
-        .dashboard-logo {
-            width: 80px;
-            height: 80px;
-            background: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            animation: pulse 2s ease-in-out infinite;
+        .dashboard-logo-img {
+            width: 250px;
+            height: auto;
+            border-radius: 15px;
         }
 
-        .dashboard-logo svg {
-            width: 50px;
-            height: 50px;
-            fill: #28a745;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            }
-
-            50% {
-                transform: scale(1.05);
-                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-            }
-
-            100% {
-                transform: scale(1);
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            }
-        }
-
-        .dashboard-text {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .dashboard-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .dashboard-subtitle {
-            font-size: 1rem;
-            opacity: 0.9;
-            font-weight: 400;
-        }
-
-        .district-info {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 15px;
+        .dashboard-button {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            text-align: center;
+            padding: 15px 30px;
+            border-radius: 15px;
+            text-decoration: none;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            min-width: 250px;
+            font-family: 'Sarabun', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .district-info p {
-            margin: 0;
-            font-size: 0.9rem;
-            opacity: 0.9;
+        .dashboard-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .dashboard-button:hover::before {
+            left: 100%;
+        }
+
+        .dashboard-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .dashboard-button:active {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
         }
 
         .feedback-buttons {
@@ -425,22 +412,17 @@
             }
 
             .dashboard-content {
-                flex-direction: column;
                 gap: 15px;
             }
 
-            .dashboard-logo {
-                width: 60px;
-                height: 60px;
+            .dashboard-logo-img {
+                width: 100px;
             }
 
-            .dashboard-logo svg {
-                width: 35px;
-                height: 35px;
-            }
-
-            .dashboard-title {
-                font-size: 1.3rem;
+            .dashboard-button {
+                font-size: 1.1rem;
+                padding: 12px 24px;
+                min-width: 200px;
             }
         }
     </style>
@@ -670,26 +652,18 @@
             </div>
         </div>
 
-        <!-- 📊 Dashboard Section -->
+        <!-- Dashboard Section -->
         <div class="dashboard-section">
             <div class="dashboard-content">
-                <div class="dashboard-logo">
-                    <svg viewBox="0 0 24 24">
-                        <path
-                            d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2M12 20C7.59 20 4 16.41 4 12S7.59 4 12 4 20 7.59 20 12 16.41 20 12 20M7 13H17V11H7M9 17H15V15H9V17Z" />
-                    </svg>
-                </div>
-                <div class="dashboard-text">
-                    <div class="dashboard-title">DASHBOARD SMARTWIN</div>
-                    <div class="dashboard-subtitle">ระบบจัดการข้อมูลผู้ขับขี่</div>
-                </div>
-            </div>
-            <div class="district-info">
-                <p>สำนักงานเขตคลองสามวา กรุงเทพมหานคร</p>
-                <p>KHLONG SAM WA DISTRICT, BMA</p>
+                <img src="https://github.com/Kanikany2003/SmartWinApp/blob/ed894a209de6f595b01ddf71d015e9aad158b372/logo.jpg"
+                    alt="SmartWin Logo" class="dashboard-logo-img" />
+                <a href="https://your-dashboard-link.com" class="dashboard-button" target="_blank">
+                    DASHBOARD SMARTWIN
+                </a>
             </div>
         </div>
     </div>
+
 </body>
 
 </html>
