@@ -134,12 +134,95 @@
             border-top: 1px solid #e9ecef;
         }
 
+        .dashboard-section {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            padding: 25px;
+            border-top: 1px solid #e9ecef;
+            text-align: center;
+            color: white;
+        }
+
         .section-title {
             text-align: center;
             font-size: 1.2rem;
             color: #333;
             font-weight: 600;
             margin-bottom: 20px;
+        }
+
+        .dashboard-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .dashboard-logo {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .dashboard-logo svg {
+            width: 50px;
+            height: 50px;
+            fill: #28a745;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            }
+
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            }
+
+            100% {
+                transform: scale(1);
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            }
+        }
+
+        .dashboard-text {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .dashboard-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .dashboard-subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        .district-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .district-info p {
+            margin: 0;
+            font-size: 0.9rem;
+            opacity: 0.9;
         }
 
         .feedback-buttons {
@@ -341,6 +424,24 @@
                 font-size: 1.2rem;
             }
 
+            .dashboard-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .dashboard-logo {
+                width: 60px;
+                height: 60px;
+            }
+
+            .dashboard-logo svg {
+                width: 35px;
+                height: 35px;
+            }
+
+            .dashboard-title {
+                font-size: 1.3rem;
+            }
         }
     </style>
 </head>
@@ -438,8 +539,7 @@
     <!-- 🧾 Main Container -->
     <div class="container">
         <div class="header">
-            <h1>SMART WIN</h1>
-            <h1>ผู้ขับขี่มอเตอร์ไซด์</h1>
+            <h1>ข้อมูลผู้ขับขี่มอเตอร์ไซด์รับจ้าง</h1>
             <p>สำนักงานเขตคลองสามวา กรุงเทพมหานคร</p>
         </div>
 
@@ -466,7 +566,7 @@
                             <path
                                 d="M12 2C15.31 2 18 4.69 18 8C18 12.5 12 19 12 19S6 12.5 6 8C6 4.69 8.69 2 12 2M12 6C10.9 6 10 6.9 10 8S10.9 10 12 10 14 9.1 14 8 13.1 6 12 6Z" />
                         </svg>
-                        ที่ตั้งวิน
+                        จุดจอด
                     </div>
                 </div>
                 <div class="info-value" id="stand"></div>
@@ -558,7 +658,7 @@
                         <path
                             d="M19.5 4.5L17 2L15.5 3.5L18 6L16.5 7.5L18 9L19.5 7.5L21 9L22.5 7.5L21 6L22.5 4.5L21 3L19.5 4.5M8 12C9.1 12 10 11.1 10 10S9.1 8 8 8 6 8.9 6 10 6.9 12 8 12M8 4C10.2 4 12 5.8 12 8S10.2 12 8 12 4 10.2 4 8 5.8 4 8 4M8 13C5.3 13 0 14.3 0 17V20H16V17C16 14.3 10.7 13 8 13Z" />
                     </svg>
-                    สายด่วนฉุกเฉิน 1669
+                    หน่วยกู้ภัย 1669
                 </a>
                 <a href="tel:191" class="emergency-btn police-btn">
                     <svg class="icon" viewBox="0 0 24 24">
@@ -567,6 +667,26 @@
                     </svg>
                     ตำรวจ 191
                 </a>
+            </div>
+        </div>
+
+        <!-- 📊 Dashboard Section -->
+        <div class="dashboard-section">
+            <div class="dashboard-content">
+                <div class="dashboard-logo">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12S6.48 22 12 22 22 17.52 22 12 17.52 2 12 2M12 20C7.59 20 4 16.41 4 12S7.59 4 12 4 20 7.59 20 12 16.41 20 12 20M7 13H17V11H7M9 17H15V15H9V17Z" />
+                    </svg>
+                </div>
+                <div class="dashboard-text">
+                    <div class="dashboard-title">DASHBOARD SMARTWIN</div>
+                    <div class="dashboard-subtitle">ระบบจัดการข้อมูลผู้ขับขี่</div>
+                </div>
+            </div>
+            <div class="district-info">
+                <p>สำนักงานเขตคลองสามวา กรุงเทพมหานคร</p>
+                <p>KHLONG SAM WA DISTRICT, BMA</p>
             </div>
         </div>
     </div>
